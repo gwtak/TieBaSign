@@ -8,7 +8,7 @@ on:
     - cron: '5 16 * * *'
 
 jobs:
-  get_points:
+  tieba_sign:
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout codes'
