@@ -1,0 +1,25 @@
+name: 'Baidu Tieba Auto Sign'
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '5 16 * * *'
+
+jobs:
+  get_points:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout codes'
+        uses: actions/checkout@v2
+      - name: 'Set python'
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.6'
+      - name: 'Install dependencies'
+        run: python -m pip install --upgrade requests
+      - name: 'Start Sign'
+        env:
+          BDUSS: ${{ secrets.BDUSS }}
+        run: python main.py
