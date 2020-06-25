@@ -6,6 +6,9 @@ import time
 import copy
 import logging
 
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
 # API_URL
 LIKIE_URL = "http://c.tieba.baidu.com/c/f/forum/like"
 TBS_URL = "http://tieba.baidu.com/dc/common/tbs"
@@ -43,21 +46,21 @@ s = requests.Session()
 
 
 def get_tbs(bduss):
-    logging.info("获取tbs开始")
+    logger.info("获取tbs开始")
     headers = copy.copy(HEADERS)
     headers.update({COOKIE: EMPTY_STR.join([BDUSS, EQUAL, bduss])})
     try:
         tbs = s.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
     except Exception as e:
-        logging.error("获取tbs出错", e)
-        logging.info("重新获取tbs开始")
+        logger.error("获取tbs出错", e)
+        logger.info("重新获取tbs开始")
         tbs = s.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
-    logging.info("重新获取tbs结束")
+    logger.info("重新获取tbs结束")
     return tbs
 
 
 def get_favorite(bduss):
-    logging.info("获取关注的贴吧开始")
+    logger.info("获取关注的贴吧开始")
     # 客户端关注的贴吧
     returnData = {}
     i = 1
@@ -79,7 +82,7 @@ def get_favorite(bduss):
     try:
         res = s.post(url=LIKIE_URL, data=data, timeout=5).json()
     except Exception as e:
-        logging.error("获取关注的贴吧出错", e)
+        logger.error("获取关注的贴吧出错", e)
         return []
     returnData = res
     if 'forum_list' not in returnData:
@@ -110,7 +113,7 @@ def get_favorite(bduss):
         try:
             res = s.post(url=LIKIE_URL, data=data, timeout=5).json()
         except Exception as e:
-            logging.error("获取关注的贴吧出错", e)
+            logger.error("获取关注的贴吧出错", e)
             continue
         if 'forum_list' not in res:
             continue
@@ -140,7 +143,7 @@ def get_favorite(bduss):
                     t.append(j)
         else:
             t.append(i)
-    logging.info("获取关注的贴吧结束")
+    logger.info("获取关注的贴吧结束")
     return t
 
 
@@ -156,7 +159,7 @@ def encodeData(data):
 
 def client_sign(bduss, tbs, fid, kw):
     # 客户端签到
-    logging.info("开始签到贴吧：", kw)
+    logger.info("开始签到贴吧：", kw)
     data = copy.copy(SIGN_DATA)
     data.update({BDUSS: bduss, FID: fid, KW: kw, TBS: tbs, TIMESTAMP: str(int(time.time()))})
     data = encodeData(data)
