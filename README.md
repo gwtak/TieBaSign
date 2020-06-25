@@ -1,5 +1,9 @@
 # 贴吧签到Github Action版
 
+## 今日签到状态
+
+![Baidu Tieba Auto Sign](https://github.com/ghosx/tieba/workflows/Baidu%20Tieba%20Auto%20Sign/badge.svg)
+
 ## 使用说明
 
 Fork 本仓库，然后点击你的仓库右上角的 Settings，找到 Secrets 这一项，添加一个秘密环境变量。
