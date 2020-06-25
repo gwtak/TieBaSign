@@ -171,8 +171,9 @@ def main():
     b = os.environ['BDUSS'].split('#')
     for i in b:
         tbs = get_tbs(i)
-        for j in get_favorite(i):
-            client_sign(i, tbs, j[0], j[1])
+        favorites = get_favorite(i)
+        for j in favorites:
+            client_sign(i, tbs, j["id"], j["name"])
 
 
 if __name__ == '__main__':
