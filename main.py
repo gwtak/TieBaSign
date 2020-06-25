@@ -52,7 +52,7 @@ def get_tbs(bduss):
     try:
         tbs = s.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
     except Exception as e:
-        logger.error("获取tbs出错", e)
+        logger.error("获取tbs出错" + e)
         logger.info("重新获取tbs开始")
         tbs = s.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
     logger.info("重新获取tbs结束")
@@ -82,7 +82,7 @@ def get_favorite(bduss):
     try:
         res = s.post(url=LIKIE_URL, data=data, timeout=5).json()
     except Exception as e:
-        logger.error("获取关注的贴吧出错", e)
+        logger.error("获取关注的贴吧出错" + e)
         return []
     returnData = res
     if 'forum_list' not in returnData:
@@ -113,7 +113,7 @@ def get_favorite(bduss):
         try:
             res = s.post(url=LIKIE_URL, data=data, timeout=5).json()
         except Exception as e:
-            logger.error("获取关注的贴吧出错", e)
+            logger.error("获取关注的贴吧出错" + e)
             continue
         if 'forum_list' not in res:
             continue
@@ -159,7 +159,7 @@ def encodeData(data):
 
 def client_sign(bduss, tbs, fid, kw):
     # 客户端签到
-    logger.info("开始签到贴吧：", kw)
+    logger.info("开始签到贴吧：" + kw)
     data = copy.copy(SIGN_DATA)
     data.update({BDUSS: bduss, FID: fid, KW: kw, TBS: tbs, TIMESTAMP: str(int(time.time()))})
     data = encodeData(data)
