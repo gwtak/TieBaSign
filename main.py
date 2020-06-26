@@ -55,7 +55,7 @@ def get_tbs(bduss):
         logger.error("获取tbs出错" + e)
         logger.info("重新获取tbs开始")
         tbs = s.get(url=TBS_URL, headers=headers, timeout=5).json()[TBS]
-    logger.info("重新获取tbs结束")
+    logger.info("获取tbs结束")
     return tbs
 
 
@@ -169,11 +169,14 @@ def client_sign(bduss, tbs, fid, kw):
 
 def main():
     b = os.environ['BDUSS'].split('#')
-    for i in b:
+    for n, i in enumerate(b):
+        logger.info("开始签到第" + str(n) + "个用户")
         tbs = get_tbs(i)
         favorites = get_favorite(i)
         for j in favorites:
             client_sign(i, tbs, j["id"], j["name"])
+        logger.info("完成第" + str(n) + "个用户签到")
+    logger.info("所有用户签到结束")
 
 
 if __name__ == '__main__':
