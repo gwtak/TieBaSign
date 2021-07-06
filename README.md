@@ -26,7 +26,7 @@
 
 ![修改workflow](assets/check.png)
 
-触发TEST
+触发TEST。
 
 ## 讨论群
 
