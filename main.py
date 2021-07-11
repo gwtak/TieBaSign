@@ -172,6 +172,7 @@ def main():
     b = os.environ['BDUSS'].split('#')
     for n, i in enumerate(b):
         if(len(i) <= 0):
+            logger.info("未检测到BDUSS")
             continue
         logger.info("开始签到第" + str(n) + "个用户" + i)
         tbs = get_tbs(i)
