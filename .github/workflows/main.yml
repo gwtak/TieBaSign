@@ -3,7 +3,7 @@ name: 'Baidu Tieba Auto Sign'
 on:
   push:
     branches:
-      - master
+      - main
   schedule:
     - cron: '5 16,22 * * *'
 
