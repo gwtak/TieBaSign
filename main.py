@@ -171,6 +171,8 @@ def client_sign(bduss, tbs, fid, kw):
 def main():
     b = os.environ['BDUSS'].split('#')
     for n, i in enumerate(b):
+        if(len(i) <= 0):
+            continue
         logger.info("开始签到第" + str(n) + "个用户" + i)
         tbs = get_tbs(i)
         favorites = get_favorite(i)
