@@ -183,9 +183,26 @@ def send_email(sign_list):
         return
     length = len(sign_list)
     subject = f"{time.strftime('%Y-%m-%d', time.localtime())} 签到{length}个贴吧"
-    body = ""
+    body = """
+    <style>
+    .child {
+      background-color: rgba(173, 216, 230, 0.19);
+      padding: 10px;
+    }
+
+    .child * {
+      margin: 5px;
+    }
+    </style>
+    """
     for i in sign_list:
-        body += f"<div>{i}</div>"
+        body += f"""
+        <div class="child">
+            <div class="name"> 贴吧名称: { i.name }</div>
+            <div class="slogan"> 贴吧简介: { i.slogan }</div>
+        </div>
+        <hr>
+        """
     msg = MIMEText(body, 'html', 'utf-8')
     msg['subject'] = subject
     smtp = smtplib.SMTP()
