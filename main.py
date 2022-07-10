@@ -7,6 +7,10 @@ import copy
 import logging
 import random
 
+import smtplib
+from email.mime.text import MIMEText
+
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -14,6 +18,12 @@ logger = logging.getLogger(__name__)
 LIKIE_URL = "http://c.tieba.baidu.com/c/f/forum/like"
 TBS_URL = "http://tieba.baidu.com/dc/common/tbs"
 SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
+
+# EMAIL
+HOST = os.environ['HOST']
+FROM = os.environ['FROM']
+TO = os.environ['TO'].split('#')
+AUTH = os.environ['AUTH']
 
 HEADERS = {
     'Host': 'tieba.baidu.com',
@@ -167,6 +177,22 @@ def client_sign(bduss, tbs, fid, kw):
     res = s.post(url=SIGN_URL, data=data, timeout=5).json()
     return res
 
+def send_email(sign_list):
+    if HOST is None or FROM is None or TO is None or AUTH is None:
+        logger.info("未配置邮箱")
+        return
+    length = len(sign_list)
+    subject = f"{time.strftime('%Y-%m-%d', time.localtime())} 签到{length}个贴吧"
+    body = ""
+    for i in sign_list:
+        body += f"<div>{i}</div>"
+    msg = MIMEText(body, 'html', 'utf-8')
+    msg['subject'] = subject
+    smtp = smtplib.SMTP()
+    smtp.connect(HOST)
+    smtp.login(FROM, AUTH)
+    smtp.sendmail(FROM, TO, msg.as_string())
+    smtp.quit()
 
 def main():
     b = os.environ['BDUSS'].split('#')
@@ -181,6 +207,7 @@ def main():
             time.sleep(random.randint(1,5))
             client_sign(i, tbs, j["id"], j["name"])
         logger.info("完成第" + str(n) + "个用户签到")
+    send_email(favorites)
     logger.info("所有用户签到结束")
 
 

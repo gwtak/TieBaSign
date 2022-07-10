@@ -22,4 +22,8 @@ jobs:
       - name: 'Start Sign'
         env:
           BDUSS: ${{ secrets.BDUSS }}
+          HOST: ${{ secrets.HOST }}
+          FROM: ${{ secrets.FROM }}
+          TO: ${{ secrets.TO }}
+          AUTH: ${{ secrets.AUTH }}
         run: python main.py
