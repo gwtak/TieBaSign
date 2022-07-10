@@ -198,8 +198,8 @@ def send_email(sign_list):
     for i in sign_list:
         body += f"""
         <div class="child">
-            <div class="name"> 贴吧名称: { i.name }</div>
-            <div class="slogan"> 贴吧简介: { i.slogan }</div>
+            <div class="name"> 贴吧名称: { i['name'] }</div>
+            <div class="slogan"> 贴吧简介: { i['slogan'] }</div>
         </div>
         <hr>
         """
