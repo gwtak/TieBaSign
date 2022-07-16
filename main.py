@@ -19,11 +19,7 @@ LIKIE_URL = "http://c.tieba.baidu.com/c/f/forum/like"
 TBS_URL = "http://tieba.baidu.com/dc/common/tbs"
 SIGN_URL = "http://c.tieba.baidu.com/c/c/forum/sign"
 
-# EMAIL
-HOST = os.environ['HOST']
-FROM = os.environ['FROM']
-TO = os.environ['TO'].split('#')
-AUTH = os.environ['AUTH']
+ENV = os.environ
 
 HEADERS = {
     'Host': 'tieba.baidu.com',
@@ -178,9 +174,13 @@ def client_sign(bduss, tbs, fid, kw):
     return res
 
 def send_email(sign_list):
-    if HOST is None or FROM is None or TO is None or AUTH is None:
-        logger.info("未配置邮箱")
+    if ('HOST' not in ENV or 'FROM' not in ENV or 'TO' not in ENV or 'AUTH' not in ENV):
+        logger.error("未配置邮箱")
         return
+    HOST = ENV['HOST']
+    FROM = ENV['FROM']
+    TO = ENV['TO'].split('#')
+    AUTH = ENV['AUTH']
     length = len(sign_list)
     subject = f"{time.strftime('%Y-%m-%d', time.localtime())} 签到{length}个贴吧"
     body = """
@@ -212,11 +212,11 @@ def send_email(sign_list):
     smtp.quit()
 
 def main():
-    b = os.environ['BDUSS'].split('#')
+    if ('BDUSS' not in ENV):
+        logger.error("未配置BDUSS")
+        return
+    b = ENV['BDUSS'].split('#')
     for n, i in enumerate(b):
-        if(len(i) <= 0):
-            logger.info("未检测到BDUSS")
-            continue
         logger.info("开始签到第" + str(n) + "个用户" + i)
         tbs = get_tbs(i)
         favorites = get_favorite(i)
