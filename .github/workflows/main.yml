@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '5 16,22 * * *'
+    - cron: '5 6,22 * * *'
 
 jobs:
   tieba_sign:
@@ -16,7 +16,7 @@ jobs:
       - name: 'Set python'
         uses: actions/setup-python@v1
         with:
-          python-version: '3.6'
+          python-version: '3.11.1'
       - name: 'Install dependencies'
         run: python -m pip install --upgrade requests
       - name: 'Start Sign'
