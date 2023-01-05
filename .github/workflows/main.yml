@@ -24,4 +24,4 @@ jobs:
           FROM: ${{ secrets.FROM }}
           TO: ${{ secrets.TO }}
           AUTH: ${{ secrets.AUTH }}
-      - run: python main.py
+        run: python main.py
