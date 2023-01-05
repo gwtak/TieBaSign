@@ -6,6 +6,7 @@ on:
       - main
   schedule:
     - cron: '5 16,22 * * *'
+  workflow_dispatch:
 
 jobs:
   tieba_sign:
