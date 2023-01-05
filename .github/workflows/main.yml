@@ -1,9 +1,6 @@
 name: 'Baidu Tieba Auto Sign'
 
 on:
-  push:
-    branches:
-      - main
   schedule:
     - cron: '13 03,06 * * *'
   workflow_dispatch:
