@@ -4,7 +4,7 @@
 
 ![Baidu Tieba Auto Sign](https://github.com/tjsky/TieBaSign/workflows/Baidu%20Tieba%20Auto%20Sign/badge.svg)
 
-## 使用说明
+## 简单的使用说明
 
 1. Fork 本仓库，然后点击你的仓库右上角的 Settings，找到 Secrets 这一项，添加一个库秘密变量（Repository secrets）。名称写 `BDUSS` ，内容写你账号的 BDUSS。
 支持同时添加多个帐户，BDUSS 之间用 `#` 隔开即可。
@@ -32,4 +32,5 @@
 | HOST  | 发信邮箱SMTP服务器地址  |  |
 | AUTH | 发信邮箱SMTP登录密码/秘钥  |  |
 
-7. [稍微详细一点的部署教程](https://www.tjsky.net/tutorial/526)
+## 稍微详细一点的部署教程
+- [稍微详细一点的部署教程](https://www.tjsky.net/tutorial/526)
